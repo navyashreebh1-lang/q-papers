@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model QuestionPaper {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  subjectName  String
+  branch       String
+  semester     Int
+  pdfUrl       String
+  cloudinaryId String?
+  downloads    Int      @default(0)
+  views        Int      @default(0)
+  tags         String[]
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  reports Report[]
+
+  @@index([branch, semester])
+  @@index([status])
+  @@index([downloads])
+  @@index([views])
+  @@index([createdAt])
+  @@index([slug])
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  paperId   String
+  reason    String
+  createdAt DateTime @default(now())
+
+  paper QuestionPaper @relation(fields: [paperId], references: [id], onDelete: Cascade)
+
+  @@index([paperId])
+}
+
+model Analytics {
+  id             String   @id @default("global")
+  totalUploads   Int      @default(0)
+  totalDownloads Int      @default(0)
+  totalViews     Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}

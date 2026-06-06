@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://vtu-question-bank.vercel.app/sitemap.xml
