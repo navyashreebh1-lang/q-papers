@@ -11,16 +11,25 @@ export const metadata: Metadata = {
     "Browse and search VTU question papers from all branches and semesters. Filter by branch, semester, subject, and more.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function BrowsePapersPage() {
-  const subjectsResult = await prisma.questionPaper.findMany({
-    where: { status: "approved" },
-    select: { subjectName: true },
-    distinct: ["subjectName"],
-  });
-  const subjects = subjectsResult
-    .map((s) => s.subjectName)
-    .filter(Boolean)
-    .sort();
+  let subjects: string[] = [];
+  try {
+    const subjectsResult = await prisma.questionPaper.findMany({
+      where: { status: "approved" },
+      select: { subjectName: true },
+      distinct: ["subjectName"],
+    });
+    subjects = subjectsResult
+      .map((s) => s.subjectName)
+      .filter(Boolean)
+      .sort();
+  } catch (error) {
+    console.error("Failed to fetch subjects from database:", error);
+    // Fallback to empty subjects array to prevent build crashes
+    subjects = [];
+  }
 
   return (
     <main className="min-h-screen">
