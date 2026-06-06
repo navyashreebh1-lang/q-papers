@@ -75,6 +75,10 @@ export async function DELETE(
 ) {
   try {
     const adminSecret = request.headers.get("x-admin-secret");
+    
+    console.log("Expected:", process.env.ADMIN_SECRET);
+    console.log("Received:", adminSecret);
+
     if (adminSecret !== process.env.ADMIN_SECRET) {
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
