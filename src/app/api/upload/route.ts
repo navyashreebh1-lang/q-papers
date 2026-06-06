@@ -75,10 +75,10 @@ export async function POST(request: NextRequest) {
         fileSize: file.size,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("POST /api/upload error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to upload file" },
+      { success: false, error: error.message || "Failed to upload file" },
       { status: 500 }
     );
   }
