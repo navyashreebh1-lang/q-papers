@@ -98,22 +98,22 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                 >
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
-                  >
-                    <link.icon className="h-4 w-4" />
-                    {link.label}
-                  </Button>
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
                 </Link>
               ))}
-              <Link href="/upload" onClick={() => setIsOpen(false)}>
-                <Button className="w-full gap-2 mt-2 rounded-full">
+              <div className="pt-2">
+                <Link 
+                  href="/upload" 
+                  onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
                   <Upload className="h-4 w-4" />
                   Upload Paper
-                </Button>
-              </Link>
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}
