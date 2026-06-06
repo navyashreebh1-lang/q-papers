@@ -82,7 +82,12 @@ export function UploadFormClient() {
       });
 
       if (!sigRes.ok) {
-        throw new Error("Failed to get upload signature");
+        let errMsg = "Failed to get upload signature";
+        try {
+          const errData = await sigRes.json();
+          errMsg = errData.error || errMsg;
+        } catch {}
+        throw new Error(errMsg);
       }
 
       const sigData = await sigRes.json();

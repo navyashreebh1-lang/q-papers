@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/upload/signature - Generate a signature for client-side upload
 export async function POST(request: NextRequest) {
   try {
