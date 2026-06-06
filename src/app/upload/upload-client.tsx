@@ -83,11 +83,11 @@ export function UploadFormClient() {
 
       if (!res.ok) {
         let errorMessage = "Upload failed";
+        const text = await res.text();
         try {
-          const data = await res.json();
+          const data = JSON.parse(text);
           errorMessage = data.error || errorMessage;
         } catch {
-          const text = await res.text();
           errorMessage = text || errorMessage;
         }
         throw new Error(errorMessage);
